@@ -1,3 +1,6 @@
+# binary datasets
+*.bin
+
 # Prerequisites
 *.d
 
