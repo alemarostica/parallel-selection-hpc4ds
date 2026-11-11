@@ -134,6 +134,18 @@ static void partition3(int32_t *data, int64_t lo, int64_t hi, int32_t pivot,
     *gt = g;
 }
 
+/* xorshift64*: small per-rank PRNG with a full 64-bit range, so indexing
+ * works even if a rank holds more than RAND_MAX elements. */
+static uint64_t rng_next(uint64_t *state) {
+
+    uint64_t x = *state;
+    x ^= x >> 12;
+    x ^= x << 25;
+    x ^= x >> 27;
+    *state = x;
+    return x * 0x2545F4914F6CDD1DULL;
+}
+
 static int cmp_i32(const void *x, const void *y) {
 
     int32_t a = *(const int32_t *)x, b = *(const int32_t *)y;
@@ -159,12 +171,16 @@ static int32_t select_kth(DistArray *a, int64_t k) {
     if (!gathered || !valid_c)
         suicide("out of memory");
 
+    /* different stream on every rank */
+    uint64_t rng = 0x9E3779B97F4A7C15ULL * ((uint64_t)a->rank + 1);
+
     int32_t result;
     while (true) {
 
         /* 1. pivot agreement: everyone shares a candidate, all pick the same */
         int32_t mine[2];
-        mine[0] = lo < hi ? a->data[lo] : 0; /* value ignored if invalid */
+        /* random element of my window; value ignored if window is empty */
+        mine[0] = lo < hi ? a->data[lo + (int64_t)(rng_next(&rng) % (uint64_t)(hi - lo))] : 0;
         mine[1] = lo < hi;
         MPI_Allgather(mine, 2, MPI_INT32_T, gathered, 2, MPI_INT32_T,
                       MPI_COMM_WORLD);
