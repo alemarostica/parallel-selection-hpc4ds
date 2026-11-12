@@ -427,52 +427,81 @@ static int32_t weighted_median(const int64_t *vw, int *order, int p,
 
 // LOAD BALANCING (optional)
 
-static inline int64_t overlap(int64_t s1, int64_t e1, int64_t s2, int64_t e2) {
-
-    int64_t s = s1 > s2 ? s1 : s2, e = e1 < e2 ? e1 : e2;
-    return e > s ? e - s : 0;
-}
-
-/* Redistribute the N surviving elements so every rank holds N/p or N/p + 1.
- * counts[] (known on all ranks) is each rank's current count; src holds this
- * rank's elements contiguously, dst receives the new block. One MPI_Alltoallv.
- */
-static void redistribute(const int32_t *src, int32_t *dst,
-                         const int64_t *counts, int p, int me, int64_t N) {
+/* Redistribute the N surviving elements so every rank holds N/p or N/p + 1,
+ * moving as few elements as possible. Element order is irrelevant for
+ * selection, so a rank with too many elements ships its surplus (the tail of
+ * its packed data) to ranks with too few; everybody else keeps what it has.
+ * The N % p "+1" slots go to the ranks that already hold the most.
+ *
+ * counts[] (known on all ranks) is each rank's current count, data must be
+ * packed in data[0, counts[me]). Every rank computes the same plan, then one
+ * MPI_Alltoallv executes it. Returns the (possibly reallocated) data, updates
+ * counts[] and sets *moved to the global number of elements that travelled. */
+static int32_t *redistribute(int32_t *data, int64_t *counts, int p, int me,
+                             int64_t N, int64_t *moved) {
 
     int64_t base = N / p, rem = N % p;
-#define TSTART(q) ((int64_t)(q) * base + ((q) < rem ? (q) : rem))
-#define TCNT(q) (base + ((q) < rem ? 1 : 0))
-
+    int64_t *tgt = xmalloc(2 * p * sizeof(int64_t)), *need = tgt + p;
     int *sc = xmalloc(4 * p * sizeof(int)), *sd = sc + p, *rc = sd + p,
         *rd = rc + p;
 
-    int64_t mystart = 0;
-    for (int r = 0; r < me; r++)
-        mystart += counts[r];
-    int64_t myend = mystart + counts[me];
+    /* rank r gets base+1 if it is among the `rem` largest (ties: low rank) */
+    for (int r = 0; r < p; r++) {
 
-    int64_t tms = TSTART(me), tme = tms + TCNT(me), s = 0;
-    int ssum = 0, rsum = 0;
-    for (int q = 0; q < p; q++) {
-
-        int64_t send = overlap(mystart, myend, TSTART(q), TSTART(q) + TCNT(q));
-        int64_t recv = overlap(s, s + counts[q], tms, tme);
-        s += counts[q];
-        if (send > INT_MAX || recv > INT_MAX)
-            suicide("rebalance message exceeds INT_MAX elements");
-        sc[q] = (int)send;
-        rc[q] = (int)recv;
-        sd[q] = ssum;
-        rd[q] = rsum;
-        ssum += sc[q];
-        rsum += rc[q];
+        int64_t pos = 0;
+        for (int q = 0; q < p; q++)
+            if (counts[q] > counts[r] || (counts[q] == counts[r] && q < r))
+                pos++;
+        tgt[r] = base + (pos < rem ? 1 : 0);
+        need[r] = tgt[r] - counts[r]; /* > 0: deficit, < 0: surplus */
     }
-    MPI_Alltoallv(src, sc, sd, MPI_INT32_T, dst, rc, rd, MPI_INT32_T,
+
+    /* pair surpluses with deficits in rank order */
+    for (int q = 0; q < p; q++)
+        sc[q] = sd[q] = rc[q] = rd[q] = 0;
+    int64_t tot = 0, sent = 0, recvd = 0;
+    int j = 0;
+    for (int i = 0; i < p; i++) {
+
+        int64_t sur = -need[i];
+        while (sur > 0) {
+
+            while (need[j] <= 0)
+                j++; /* total surplus == total deficit, so j stays < p */
+            int64_t amt = sur < need[j] ? sur : need[j];
+            if (amt > INT_MAX)
+                suicide("rebalance message exceeds INT_MAX elements");
+            if (i == me) {
+
+                sc[j] = (int)amt;
+                sd[j] = (int)(tgt[me] + sent); /* tail of my data */
+                sent += amt;
+            }
+            if (j == me) {
+
+                rc[i] = (int)amt;
+                rd[i] = (int)(counts[me] + recvd); /* appended after mine */
+                recvd += amt;
+            }
+            sur -= amt;
+            need[j] -= amt;
+            tot += amt;
+        }
+    }
+
+    if (recvd > 0) /* only deficit ranks grow, and they send nothing */
+        data = realloc(data, (size_t)tgt[me] * sizeof(int32_t));
+    if (!data)
+        suicide("out of memory");
+    MPI_Alltoallv(data, sc, sd, MPI_INT32_T, data, rc, rd, MPI_INT32_T,
                   MPI_COMM_WORLD);
+
+    for (int r = 0; r < p; r++)
+        counts[r] = tgt[r];
+    *moved = tot;
+    free(tgt);
     free(sc);
-#undef TSTART
-#undef TCNT
+    return data;
 }
 
 // PARALLEL SELECTION
@@ -602,31 +631,28 @@ static int32_t select_kth(DistArray *arr, int64_t k, const Options *opt,
                 mx = counts[r];
         double imbalance = N > 0 ? (double)mx * p / (double)N : 1.0;
         int did_rebalance = 0;
+        int64_t moved = 0;
         if (opt->rebalance_ratio > 0 && N > switch_size &&
             imbalance > opt->rebalance_ratio) {
 
             pack_windows(data, &w);
-            int64_t base = N / p, rem = N % p;
-            int32_t *fresh =
-                xmalloc((base + (me < rem ? 1 : 0)) * sizeof(int32_t));
-            redistribute(data, fresh, counts, p, me, N);
-            free(data);
-            data = fresh;
-            for (int r = 0; r < p; r++)
-                counts[r] = base + (r < rem ? 1 : 0);
+            data = redistribute(data, counts, p, me, N, &moved);
             windows_init(&w, counts[me], T);
             did_rebalance = 1;
             st->rebalances++;
         }
 
         st->rounds++;
+        char rb[64] = "";
+        if (did_rebalance)
+            snprintf(rb, sizeof rb, " [rebalanced, moved %" PRId64 "]", moved);
         if (opt->verbose && me == 0)
             printf(
                 "  round %2d: N=%" PRId64 " B=%d pivot=%d keep=%s -> N=%" PRId64
                 " (%.1f%%) imbalance=%.2f%s %.1f ms\n",
                 st->rounds, N_before, B, pivot, keep_less ? "L" : "R", N,
                 100.0 * (double)N / (double)N_before, imbalance,
-                did_rebalance ? " [rebalanced]" : "", 1e3 * (MPI_Wtime() - t0));
+                rb, 1e3 * (MPI_Wtime() - t0));
     }
 
     if (!found) {
