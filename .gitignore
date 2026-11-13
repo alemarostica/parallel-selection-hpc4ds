@@ -56,3 +56,13 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+# Ignore some Latex report stuff
+report/main.pdf
+report/svg-inkscape/*
+report/build/*
+report/.araraconfig.yaml
+*.log
+*.aux
+*.out
+*.toc
