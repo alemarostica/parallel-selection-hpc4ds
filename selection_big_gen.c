@@ -249,6 +249,7 @@ static void generate_array(DistArray *a, const Options *opt) {
     MPI_Comm_rank(MPI_COMM_WORLD, &a->rank);
     MPI_Comm_size(MPI_COMM_WORLD, &a->size);
     a->global_n = opt->gen_n;
+    compute_partition(a);	
     a->data = xmalloc(a->local_n * sizeof(int32_t));
     gen_fill_parallel(a->data, a->offset, a->local_n, a->global_n, opt);
 }
@@ -884,7 +885,7 @@ int main(int argc, char **argv) {
                    .maxv = 2147483647ULL,
                    .mode = GEN_RANDOM};
     int do_verify = 0, do_verify_stream = 0, opterr_flag = 0, c;
-    while ((c = getopt(argc, argv, "dvVr:s:p:g:S:M:m")) != -1) {
+    while ((c = getopt(argc, argv, "dvVr:s:p:g:S:M:m:")) != -1) {
         switch (c) {
         case 'd':
             opt.verbose = 1;
@@ -929,6 +930,7 @@ int main(int argc, char **argv) {
                 opt.mode = GEN_REVERSE;
             else
                 opterr_flag = 1;
+            break;
         default:
             opterr_flag = 1;
         }
@@ -945,7 +947,7 @@ int main(int argc, char **argv) {
             fprintf(stderr,
                     "Usage: %s [-p mom|rand] [-d] [-v] [-r ratio>1] "
                     "[-s switch_size] <data_file> [k]\n"
-                    "       %s -g N [-S seed] [-M maxv] [-m ]"
+                    "       %s -g N [-S seed] [-M maxv] [-m "
                     "random|sorted|reverse] [other options] [k]\n"
                     "       (-v needs a file; with -g use -V)\n",
                     argv[0], argv[0]);
@@ -973,7 +975,7 @@ int main(int argc, char **argv) {
 
     if (rank == 0) {
 
-        double data_mb = (double)arr.local_n * 4 / 104856.0;
+        double data_mb = (double)arr.local_n * 4 / 1048576.0;
         double scratch_mb =
             opt.pivot == PIVOT_MOM
                 ? (double)arr.local_n / block_size(arr.global_n) * 4 / 1048576.0
