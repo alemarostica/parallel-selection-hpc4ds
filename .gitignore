@@ -66,3 +66,6 @@ report/.araraconfig.yaml
 *.aux
 *.out
 *.toc
+
+# IDE stuff
+.vscode
