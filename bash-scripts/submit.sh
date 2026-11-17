@@ -12,4 +12,5 @@ mpicc -O3 -march=native -fopenmp -I"$SRC" \
     "$SRC"/selection_big_gen.c "$SRC"/io_gen.c "$SRC"/kernels.c "$SRC"/pivot.c \
     -o selection
 chmod +x mpi_wrapper.sh
+mkdir -p logs
 qsub "$1"
