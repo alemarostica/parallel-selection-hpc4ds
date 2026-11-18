@@ -37,6 +37,7 @@
  *        OMP_NUM_THREADS=4 mpirun -n 2 ./selection -g N [options] [k]
               (no file,: every ranks generates its own slice of N elements)
  *   -p mom|rand|fr pivot strategy (default mom)
+ *   -f n        with -p fr: sample size in elements (default: N^(2/3)/2)
  *   -d          print per-round diagnostic (pivot, sizes, imbalance)
  *   -v          verify the answer against a sequential solve (rank 0 reads the
  *               whole file: only use on files that fit in one rank's memory)
@@ -235,8 +236,10 @@ static int32_t select_kth(DistArray *arr, int64_t k, const Options *opt,
          * all modes. */
         int B = block_size(N);
         int32_t u, v;
+        double tm[4] = {0, 0, 0, 0}; /* FR timings, see fr_bounds */
+        const int fr_round = fr_active; /* the guard below may switch it off */
         if (fr_active)
-            fr_bounds(data, &w, counts, N, k, p, me, &rng, &u, &v);
+            fr_bounds(data, &w, counts, N, k, p, me, &rng, opt->fr_sample, tm, &u, &v);
         else
         {
             int64_t mine[2] = {0, w.active};
@@ -251,6 +254,7 @@ static int32_t select_kth(DistArray *arr, int64_t k, const Options *opt,
 
         /* three-way partition: below u / inside [u, v] / above v
          * (for u == v: below / equal / above the pivot), one chunk per thread */
+        double t_part = MPI_Wtime();
 #pragma omp parallel for schedule(static)
         for (int c = 0; c < C; c++)
         {
@@ -259,6 +263,7 @@ static int32_t select_kth(DistArray *arr, int64_t k, const Options *opt,
             else
                 partition3(data, w.lo[c], w.hi[c], pivot, &w.lt[c], &w.gt[c]);
         }
+        t_part = MPI_Wtime() - t_part;
 
         int64_t loc[3] = {0, 0, 0};
         for (int c = 0; c < C; c++)
@@ -360,6 +365,10 @@ static int32_t select_kth(DistArray *arr, int64_t k, const Options *opt,
                    N,
                    100.0 * (double)N / (double)N_before, imbalance, rb,
                    1e3 * (MPI_Wtime() - t0));
+        if (opt->verbose && me == 0 && fr_round)
+            printf("           fr: s=%.0f draw %.0f ms, allgather %.0f ms, "
+                   "select %.0f ms, partition %.0f ms\n",
+                   tm[3], 1e3 * tm[0], 1e3 * tm[1], 1e3 * tm[2], 1e3 * t_part);
     }
 
     if (!found)
@@ -497,7 +506,7 @@ int main(int argc, char **argv)
                    .maxv = 2147483647ULL,
                    .mode = GEN_RANDOM};
     int do_verify = 0, do_verify_stream = 0, opterr_flag = 0, c;
-    while ((c = getopt(argc, argv, "dvVr:s:p:g:S:M:m:")) != -1)
+    while ((c = getopt(argc, argv, "dvVr:s:p:g:S:M:m:f:")) != -1)
     {
         switch (c)
         {
@@ -534,6 +543,11 @@ int main(int argc, char **argv)
         case 'S':
             opt.seed = strtoull(optarg, NULL, 10);
             break;
+        case 'f':
+            opt.fr_sample = strtoll(optarg, NULL, 10);
+            if (opt.fr_sample <= 0)
+                opterr_flag = 1;
+            break;
         case 'M':
             opt.maxv = strtoull(optarg, NULL, 10);
             break;
@@ -563,7 +577,7 @@ int main(int argc, char **argv)
 
             fprintf(stderr,
                     "Usage: %s [-p mom|rand|fr] [-d] [-v] [-r ratio>1] "
-                    "[-s switch_size] <data_file> [k]\n"
+                    "[-s switch_size] [-f fr_sample] <data_file> [k]\n"
                     "       %s -g N [-S seed] [-M maxv] [-m "
                     "random|sorted|reverse] [other options] [k]\n"
                     "       (-v needs a file; with -g use -V)\n",

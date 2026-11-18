@@ -51,6 +51,7 @@ typedef struct
     uint64_t seed; /* generator seed */
     uint64_t maxv; /* generated values are in [0, maxv) */
     GenMode mode;  /* random | sorted | reverse */
+    int64_t fr_sample; /* FR sample size in elements (0 = paper's formula) */
 } Options;
 
 typedef struct
@@ -97,6 +98,6 @@ int block_size(int64_t N);
 int32_t pivot_mom(int32_t *data, Windows *w, int B, int32_t *scratch);
 int32_t pivot_random(const int32_t *data, const Windows *w, uint64_t *rng);
 int32_t weighted_median(const int64_t *vw, int *order, int p, int64_t N);
-void fr_bounds(const int32_t *data, const Windows *w, const int64_t *counts, int64_t N, int64_t k, int p, int me, uint64_t *rng, int32_t *u, int32_t *v);
+void fr_bounds(const int32_t *data, const Windows *w, const int64_t *counts, int64_t N, int64_t k, int p, int me, uint64_t *rng, int64_t s_req, double *tm, int32_t *u, int32_t *v);
 
 #endif

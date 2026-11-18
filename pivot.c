@@ -13,11 +13,6 @@ uint64_t rng_next(uint64_t *state)
     *state = x;
     return x * 0x2545F4914F6CDD1DULL;
 }
-static int cmp32(const void *a, const void *b)
-{
-    int32_t x = *(const int32_t *)a, y = *(const int32_t *)b;
-    return (x > y) - (x < y);
-}
 // WINDOWS (type: see selection.h)
 
 void windows_init(Windows *w, int64_t m, int T)
@@ -169,16 +164,18 @@ int32_t weighted_median(const int64_t *vw, int *order, int p,
     and few elements are in between: 
     
     1. every rank draws a share of a random sample, proportional to the data it still holds, so the sample is uniform over the surviving elemnts;
-    2. the sample is allgathered and sorted (same result on every rank);
+    2. the sample is allgathered (same on every rank) and the two ranks needed are selected from it;
     3. u and v are the sample values d*sqrt(s) positions below and above the sample rank that corresponds to k, with d = sqrt(ln N).
 
     A bound that falls off the sample becomes INT32_MIN / INT32_MAX.
     COLLECTIVE: all ranks must call it with the same N,k, and counts.
 */
-void fr_bounds(const int32_t *data, const Windows *w, const int64_t *counts, int64_t N, int64_t k, int p, int me, uint64_t *rng, int32_t *u, int32_t *v)
+void fr_bounds(const int32_t *data, const Windows *w, const int64_t *counts, int64_t N, int64_t k, int p, int me, uint64_t *rng, int64_t s_req, double *tm, int32_t *u, int32_t *v)
 {
-    /* sample size from the paper: s ~ N^(2/3) * ln(N)^(1/3) */
-    int64_t s = (int64_t)(pow(N, 2.0 / 3.0) * cbrt(log(N)));
+    double t0 = MPI_Wtime(); /* tm[0..2]: draw, allgather, select (seconds); tm[3]: s */
+    /* sample size: s_req if given (-f), else N^(2/3)/2 (measured: flat optimum
+     * around 250k..4M at N=2e10; the paper's N^(2/3)*ln(N)^(1/3) is too big) */
+    int64_t s = s_req > 0 ? s_req : (int64_t)(pow((double)N, 2.0 / 3.0) / 2);
     if (s > N)
         s = N;
     /* each rank's share is computed from counts[]: no extra communication */
@@ -197,6 +194,7 @@ void fr_bounds(const int32_t *data, const Windows *w, const int64_t *counts, int
         free(rc);
         *u = INT32_MIN;
         *v = INT32_MAX;
+        tm[0] = tm[1] = tm[2] = tm[3] = 0;
         return;
     }
     /* draw with replacement: pick a random live element, walking the chunks */
@@ -215,19 +213,33 @@ void fr_bounds(const int32_t *data, const Windows *w, const int64_t *counts, int
             r -= len;
         }
     }
+    double t1 = MPI_Wtime();
     /* each rank filled its own slice; Allgatherv in place shares the rest */
     MPI_Allgatherv(MPI_IN_PLACE, 0, MPI_DATATYPE_NULL, all, rc, rd, MPI_INT32_T, MPI_COMM_WORLD);
-    qsort(all, s, sizeof(int32_t), cmp32);
-
+    double t2 = MPI_Wtime();
     /* expected sample rank of k, and a margin of d standard deviations */
     double d = sqrt(log((double)N));
     double center = (double)k * (double)(s + 1) / (double)(N + 1);
     double off = d * sqrt((double)s);
     int64_t ru = (int64_t)floor(center - off);
     int64_t rv = (int64_t)ceil(center + off);
-    *u = (ru < 0) ? INT32_MIN : all[ru];
-    *v = (rv >= s) ? INT32_MAX : all[rv];
+    /* only ranks ru and rv are needed: two linear quickselects instead of a
+     * full sort (the second one runs on the part right of ru) */
+    if (ru >= 0)
+        *u = quickselect(all, s, ru);
+    else
+        *u = INT32_MIN;
+    if (rv >= s)
+        *v = INT32_MAX;
+    else if (ru >= 0)
+        *v = quickselect(all + ru + 1, s - ru - 1, rv - ru - 1);
+    else
+        *v = quickselect(all, s, rv);
 
+    tm[0] = t1 - t0;
+    tm[1] = t2 - t1;
+    tm[2] = MPI_Wtime() - t2;
+    tm[3] = (double)s;
     free(all);
     free(rc);
 }
