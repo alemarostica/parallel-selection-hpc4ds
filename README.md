@@ -16,6 +16,11 @@ mpicc -O3 -march=native -fopenmp -o selection \
 On the cluster, `submit.sh <job.sh>` loads MPICH, builds
 `selection` and submits the job.
 
+`-march=native` builds for the CPU of the machine where you compile (the login
+node). If a job lands on a node with an older CPU, the program can die with an
+illegal instruction (exit code 132). This happened on `hpc3-c02-n07` in the
+32-rank scaling run; if you see it, build without `-march=native`.
+
 ## Run
 
 ```bash
@@ -47,6 +52,7 @@ OMP_NUM_THREADS=8 ./gen_dataset <n> data.bin [seed] [max_value] [--mode random|s
 |---|---|
 | `-p mom\|rand\|fr` | Pivot strategy (default `mom`), see below |
 | `-f n` | With `-p fr`: sample size in elements (default `N^(2/3)/2`) |
+| `-R` | With `-p fr`: read-only counting pass instead of the in-place swap partition (see below) |
 | `-d` | Print one line per round (pivot, remaining size, imbalance, time); with `fr` also the sampling and partition timings |
 | `-r RATIO` | Redistribute the survivors when `max_local / average_local > RATIO` (RATIO > 1; default: never) |
 | `-s SIZE` | Stop reducing and gather on rank 0 when N <= SIZE (default: `min(n / log2 n, 4M)`) |
@@ -62,12 +68,41 @@ OMP_NUM_THREADS=8 ./gen_dataset <n> data.bin [seed] [max_value] [--mode random|s
 - `fr` (Floyd-Rivest): each round picks two bounds from a random sample so that
   the k-th element almost surely lies between them, and keeps only that part.
   Usually 2 rounds. Fastest in our benchmarks on all inputs tested except one
-  with very few distinct values. Use this by default.
+  with very few distinct values (10 distinct values: about as fast as `rand`).
+  Use this by default.
 - `rand`: pivot is the median of 15 random elements per rank. Cheap per round,
   about 12 rounds, only expected-case guarantees.
 - `mom`: median of block medians. Deterministic and robust, but the slowest.
 
 Results are identical in all modes; only the time changes.
+
+### `-R`: read-only counting pass (with `-p fr`)
+
+By default `fr` partitions the data in place: below `u` / inside `[u, v]` /
+above `v`. With `-R` the first pass over each chunk only reads the data: it
+counts the elements below `u` and copies the few elements inside `[u, v]` into
+a side buffer; if k falls in that middle part (almost always) the buffer
+becomes the new data. A chunk that would need more than `len/32 + 4096` slots
+is partitioned in place instead, and if k misses the middle part the remaining
+chunks are partitioned in place, so the result is always the same.
+
+Measured on 16 ranks x 4 threads, N = 2e10 unless noted (medians of 3 runs unless noted):
+
+| Case | in-place | `-R` |
+|---|---|---|
+| median (k = N/2) | 2.45 s (1 run) | 0.87 and 1.72 s (2 runs) |
+| k = N/10 | 1.48 s | 1.18 s |
+| many duplicates (1e6 distinct values) | 2.03 s | 0.91 s |
+| small N (2e8, 2e9, median) | 0.041, 0.22 s | 0.021, 0.10 s |
+| sorted, reverse | 0.63, 0.59 s | 0.76, 0.80 s |
+| k = 0 | 0.88 s | 1.18 s |
+| k = N-1 | 1.07 s | 0.94 s (about equal) |
+| 10 distinct values | 3.2 s | 3.4 s |
+
+`-R` costs about the same in every case (round 1 is a flat ~0.5 s of partition
+time at N = 2e10), so it wins where the in-place pass is slow (middle k,
+duplicates) and loses a little where the in-place pass is fast (ordered data,
+k near 0). Cost: a side buffer of about 3% of the local data (see Memory).
 
 ## Examples
 
@@ -78,6 +113,9 @@ OMP_NUM_THREADS=4 mpirun -n 16 ./selection -g 20000000000 -p fr -d -V
 # 10th percentile of a file
 OMP_NUM_THREADS=4 mpirun -n 4 ./selection -p fr data.bin 100000000
 
+# same, with the read-only counting pass
+OMP_NUM_THREADS=4 mpirun -n 16 ./selection -g 20000000000 -p fr -R -d -V
+
 # sorted data with rebalancing when a rank holds 1.5x the average
 OMP_NUM_THREADS=4 mpirun -n 16 ./selection -g 20000000000 -m sorted -r 1.5 -p fr
 ```
@@ -85,27 +123,52 @@ OMP_NUM_THREADS=4 mpirun -n 16 ./selection -g 20000000000 -m sorted -r 1.5 -p fr
 ## Memory
 
 Per rank: 4 bytes x n/p for the data, plus about 0.15 bytes per element of
-scratch with `mom` or `fr` (none with `rand`). Example: n = 2e10 on 16 ranks is
-about 4.8 GB of data per rank. Choose the PBS `mem` request accordingly
-(two ranks per node need about 10 GB).
+scratch with `mom` or `fr` (none with `rand`), plus about 3% of the data for
+the side buffer with `-R`. Example: n = 2e10 on 16 ranks is about 4.8 GB of
+data per rank. Choose the PBS `mem` request accordingly (two ranks per node
+need about 10 GB; with 8 ranks, n = 2e10 does not fit in `mem=16gb` per node).
 
 ## Benchmarks on the cluster
 
-Job scripts in `bash-scripts/` run `mom`, `rand` and `fr` three times each on one
-family of configurations; results are written to `bash-scripts/logs/` and
-copied to `bash-scripts/results/`.
+Job scripts in `bash-scripts/` run `mom`, `rand`, `fr` and `fr -R` (labelled
+`frR` in the logs) three times each on one family of configurations; results
+are written to `bash-scripts/logs/` and copied to `bash-scripts/results/`.
+The shared helper is `cfg_lib.sh` (`bench "<label>" <options>`).
 
 | Script | What it varies |
 |---|---|
 | `cfg_k.sh` | position of k |
 | `cfg_dist.sh` | data distribution (sorted, reverse, duplicates, rebalancing) |
 | `cfg_size.sh` | problem size |
-| `cfg_scale.sh` | number of ranks (submit with `qsub -v RANKS=8 -l select=4:ncpus=8:mpiprocs=2:mem=16gb cfg_scale.sh`, then 16 and 32) |
-| `cfg_sample.sh` | FR sample size (`-f`) |
+| `cfg_scale.sh` | number of ranks, see below |
+| `cfg_sample.sh` | FR sample size (`-f`), with `-R`, plus `rand` as reference |
 
-Build once with `./submit.sh cfg_k.sh`, submit the others with `qsub`. Read a
-result log with:
+Build once with `./submit.sh cfg_k.sh`, submit the others with `qsub`, one job
+at a time (jobs running together can share nodes and disturb the timings).
+Read a result log with:
 
 ```bash
 grep -E "^###|k-th smallest" logs/cfg_k.txt
 ```
+
+The scaling job takes the rank count from the command line; give each run its
+own log, and set `select` to ranks / 2 (two ranks per chunk):
+
+```bash
+qsub -o logs/cfg_scale_8.txt  -e logs/cfg_scale_8_err.txt  -v RANKS=8  -l select=4:ncpus=8:mpiprocs=2:mem=16gb  cfg_scale.sh
+qsub -o logs/cfg_scale_16.txt -e logs/cfg_scale_16_err.txt -v RANKS=16 -l select=8:ncpus=8:mpiprocs=2:mem=16gb  cfg_scale.sh
+qsub -o logs/cfg_scale_32.txt -e logs/cfg_scale_32_err.txt -v RANKS=32 -l select=16:ncpus=8:mpiprocs=2:mem=16gb cfg_scale.sh
+```
+
+### Results so far (selection time, N = 2e10 unless noted, 16 ranks x 4 threads)
+
+Mean over 9 configurations (4 values of k, 5 data distributions), 3 runs each:
+
+| mom | rand | fr | fr -R |
+|---|---|---|---|
+| 12.0 s | 5.8 s | 1.36 s | 1.27 s |
+
+N = 1e10: `mom` 5.5 s, `rand` 2.3 s, `fr` 1.0 s, `fr -R` 0.37 s (16 ranks);
+`fr -R` 0.80 s (8 ranks). Run-to-run noise on the cluster is large (up to a
+factor of two in single cells), so compare modes within the same job. The
+32-rank run is not available (see the note in Build).
