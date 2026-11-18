@@ -13,5 +13,5 @@ mkdir -p logs
 export OMP_NUM_THREADS=4
 module load MPICH/3.4.2-GCC-10.3.0
 
-mpirun -n 16 ./mpi_wrapper.sh ./selection -g 20000000000 -p mom -d -V
+mpirun -n 16 ./mpi_wrapper.sh ./selection -g 20000000000 -p fr -d -V
 

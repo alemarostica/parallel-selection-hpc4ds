@@ -127,3 +127,39 @@ void partition3(int32_t *data, int64_t lo, int64_t hi, int32_t pivot,
     *lt = l;
     *gt = g;
 }
+/*
+ * Three way (Dutch national flag) partition of data[lo, hi) around
+ * `pivot`, in place, single pass. On return, with *lt and *gt absolute indices
+ * into data:
+ *   data[lo, *lt) < u
+ *   data[*lt, *gt) in [u,v]
+ *   data[*gt, hi) > v
+ * And empty window is valid and yields *lt == *gt == lo.
+ * 
+ * Used by the Floyd-Rivest pivot: with u == v it behaves exactly like partition3. Elements equal to u or v stay in the middle
+ */
+void partition_bracket(int32_t *data, int64_t lo, int64_t hi, int32_t u, int32_t v, int64_t *lt, int64_t *gt) {
+
+    int64_t i = lo, l = lo, g = hi;
+    while (i < g) {
+
+        int32_t x = data[i];
+        if (x < u) {
+
+            data[i] = data[l];
+            data[l] = x;
+            l++;
+            i++;
+        } else if (x > v) {
+
+            g--;
+            data[i] = data[g];
+            data[g] = x;
+        } else {
+
+            i++;
+        }
+    }
+    *lt = l;
+    *gt = g;
+}

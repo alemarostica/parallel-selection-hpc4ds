@@ -36,7 +36,7 @@
  * Run:   OMP_NUM_THREADS=4 mpirun -n 2 ./selection [options] data.bin [k]
  *        OMP_NUM_THREADS=4 mpirun -n 2 ./selection -g N [options] [k]
               (no file,: every ranks generates its own slice of N elements)
- *   -p mom|rand pivot strategy (default mom)
+ *   -p mom|rand|fr pivot strategy (default mom)
  *   -d          print per-round diagnostic (pivot, sizes, imbalance)
  *   -v          verify the answer against a sequential solve (rank 0 reads the
  *               whole file: only use on files that fit in one rank's memory)
@@ -78,7 +78,8 @@
  * One MPI_Alltoallv, with separate send/receive buffers (MPI forbids passing
  * the same buffer for both). */
 static int32_t *redistribute(int32_t *data, int64_t *counts, int p, int me,
-                             int64_t N, int64_t *moved) {
+                             int64_t N, int64_t *moved)
+{
 
     int64_t base = N / p, rem = N % p;
     int64_t *tgt = xmalloc(2 * p * sizeof(int64_t)), *need = tgt + p;
@@ -86,7 +87,8 @@ static int32_t *redistribute(int32_t *data, int64_t *counts, int p, int me,
         *rd = rc + p;
 
     /* the `rem` ranks holding the most get base + 1 (ties: lower rank) */
-    for (int r = 0; r < p; r++) {
+    for (int r = 0; r < p; r++)
+    {
 
         int64_t pos = 0;
         for (int q = 0; q < p; q++)
@@ -102,15 +104,18 @@ static int32_t *redistribute(int32_t *data, int64_t *counts, int p, int me,
     /* greedy matching: surplus ranks in order feed deficit ranks in order */
     int64_t tot = 0, sent = 0, recvd = 0;
     int j = 0;
-    for (int i = 0; i < p; i++) {
+    for (int i = 0; i < p; i++)
+    {
 
         int64_t sur = -need[i];
-        while (sur > 0) {
+        while (sur > 0)
+        {
 
             while (need[j] <= 0)
                 j++; /* total surplus == total deficit, so j stays < p */
             int64_t amt = sur < need[j] ? sur : need[j];
-            if (i == me) {
+            if (i == me)
+            {
 
                 if (amt > INT_MAX || tgt[me] + sent > INT_MAX)
                     suicide("rebalance message exceeds INT_MAX elements");
@@ -118,7 +123,8 @@ static int32_t *redistribute(int32_t *data, int64_t *counts, int p, int me,
                 sd[j] = (int)(tgt[me] + sent); /* tail of my data */
                 sent += amt;
             }
-            if (j == me) {
+            if (j == me)
+            {
 
                 if (amt > INT_MAX || counts[me] + recvd > INT_MAX)
                     suicide("rebalance message exceeds INT_MAX elements");
@@ -132,7 +138,8 @@ static int32_t *redistribute(int32_t *data, int64_t *counts, int p, int me,
         }
     }
 
-    if (recvd > 0) { /* only deficit ranks grow, and they send nothing */
+    if (recvd > 0)
+    { /* only deficit ranks grow, and they send nothing */
         data = realloc(data, (size_t)tgt[me] * sizeof(int32_t));
         if (!data)
             suicide("out of memory");
@@ -143,7 +150,8 @@ static int32_t *redistribute(int32_t *data, int64_t *counts, int p, int me,
     int32_t *rbuf = (recvd > 0) ? data : &dummy;
     MPI_Alltoallv((sbuf), sc, sd, MPI_INT32_T, rbuf, rc, rd, MPI_INT32_T,
                   MPI_COMM_WORLD);
-    if (sent > 0 && tgt[me] > 0) { /* surplus rank: give the tail back*/
+    if (sent > 0 && tgt[me] > 0)
+    { /* surplus rank: give the tail back*/
 
         int32_t *shrunk = realloc(data, (size_t)tgt[me] * sizeof(int32_t));
         if (shrunk)
@@ -165,7 +173,8 @@ static int32_t *redistribute(int32_t *data, int64_t *counts, int p, int me,
  * same value. Invariant: the answer is the k-th smallest among the union of the
  * ranks' windows; k is relative to that union. */
 static int32_t select_kth(DistArray *arr, int64_t k, const Options *opt,
-                          Stats *st) {
+                          Stats *st)
+{
 
     const int p = arr->size, me = arr->rank;
     int32_t *data = arr->data;
@@ -173,7 +182,8 @@ static int32_t select_kth(DistArray *arr, int64_t k, const Options *opt,
     const int T = omp_get_max_threads();
 
     int64_t switch_size = opt->switch_size;
-    if (switch_size <= 0) {
+    if (switch_size <= 0)
+    {
 
         int lg = 1;
         for (int64_t t = N; t > 1; t >>= 1)
@@ -193,7 +203,7 @@ static int32_t select_kth(DistArray *arr, int64_t k, const Options *opt,
     /* no rank ever holds more than ceil(N/p) elements, even when rebalanced */
     int64_t cap = N / p + 1;
     int32_t *scratch = NULL;
-    if (opt->pivot == PIVOT_MOM)
+    if (opt->pivot != PIVOT_RANDOM)
         scratch = xmalloc((cap / block_size(switch_size) +
                            (int64_t)CHUNKS_PER_THREAD * T + 8) *
                           sizeof(int32_t));
@@ -209,31 +219,50 @@ static int32_t select_kth(DistArray *arr, int64_t k, const Options *opt,
 
     int32_t result = 0;
     int found = 0;
-
-    while (N > switch_size) {
+    /* FR is switched off for good if a round does not shrink the problem
+     * (e.g. many duplicates); MoM then guarantees progress. */
+    int fr_active = (opt->pivot == PIVOT_FR);
+    while (N > switch_size)
+    {
 
         double t0 = MPI_Wtime();
         const int64_t N_before = N;
         const int C = w.C;
 
-        /* pivot: everyone proposes a candidate, all pick the same weighted
-         * median */
+        /* pivot: FR picks two bounds u <= v from a sample; the other modes
+         * pick one pivot (everyone proposes a candidate, all pick the same
+         * weighted median) and use u = v = pivot, so the code below handles
+         * all modes. */
         int B = block_size(N);
-        int64_t mine[2] = {0, w.active};
-        if (w.active > 0)
-            mine[0] = (opt->pivot == PIVOT_MOM)
-                          ? pivot_mom(data, &w, B, scratch)
-                          : pivot_random(data, &w, &rng);
-        MPI_Allgather(mine, 2, MPI_INT64_T, vw, 2, MPI_INT64_T, MPI_COMM_WORLD);
-        const int32_t pivot = weighted_median(vw, order, p, N);
+        int32_t u, v;
+        if (fr_active)
+            fr_bounds(data, &w, counts, N, k, p, me, &rng, &u, &v);
+        else
+        {
+            int64_t mine[2] = {0, w.active};
+            if (w.active > 0)
+                mine[0] = (opt->pivot != PIVOT_RANDOM)
+                              ? pivot_mom(data, &w, B, scratch)
+                              : pivot_random(data, &w, &rng);
+            MPI_Allgather(mine, 2, MPI_INT64_T, vw, 2, MPI_INT64_T, MPI_COMM_WORLD);
+            u = v = weighted_median(vw, order, p, N);
+        }
+        const int32_t pivot = u; /* shown in the diagnostics */
 
-        /* three-way partition counts, one chunk per thread */
+        /* three-way partition: below u / inside [u, v] / above v
+         * (for u == v: below / equal / above the pivot), one chunk per thread */
 #pragma omp parallel for schedule(static)
         for (int c = 0; c < C; c++)
-            partition3(data, w.lo[c], w.hi[c], pivot, &w.lt[c], &w.gt[c]);
+        {
+            if (fr_active)
+                partition_bracket(data, w.lo[c], w.hi[c], u, v, &w.lt[c], &w.gt[c]);
+            else
+                partition3(data, w.lo[c], w.hi[c], pivot, &w.lt[c], &w.gt[c]);
+        }
 
         int64_t loc[3] = {0, 0, 0};
-        for (int c = 0; c < C; c++) {
+        for (int c = 0; c < C; c++)
+        {
 
             loc[0] += w.lt[c] - w.lo[c];
             loc[1] += w.gt[c] - w.lt[c];
@@ -241,42 +270,62 @@ static int32_t select_kth(DistArray *arr, int64_t k, const Options *opt,
         }
         MPI_Allgather(loc, 3, MPI_INT64_T, tri, 3, MPI_INT64_T, MPI_COMM_WORLD);
         int64_t L = 0, E = 0, G = 0;
-        for (int r = 0; r < p; r++) {
+        for (int r = 0; r < p; r++)
+        {
 
             L += tri[3 * r];
             E += tri[3 * r + 1];
             G += tri[3 * r + 2];
         }
+        /* everything fell inside [u, v] and u < v: FR cannot make progress on
+         * this input, so switch to MoM from the next round on */
+        if (fr_active && u < v && E == N_before)
+            fr_active = 0;
 
-        /* every rank sees the same L, E, G and k -> same branch everywhere */
-        int keep_less;
+        /* three outcomes: k in the part below u, inside [u, v], or above v.
+         * L, E, G are the sizes of those parts (as before when u == v).
+         * Every rank sees the same L, E, G and k -> same branch everywhere */
+        int keep_less = 0, keep_mid = 0;
         if (k < L)
             keep_less = 1;
-        else if (k < L + E) {
-
-            result = pivot;
-            found = 1;
-            st->rounds++;
-            if (opt->verbose && me == 0)
-                printf("  round %2d: N=%" PRId64 " pivot=%d L=%" PRId64
-                       " E=%" PRId64 " G=%" PRId64 " -> pivot is the answer\n",
-                       st->rounds, N_before, pivot, L, E, G);
-            break;
-        } else {
-
-            keep_less = 0;
+        else if (k < L + E)
+        {
+            if (u == v)
+            {
+                /* the middle part is all equal to u, so u is the answer */
+                result = pivot;
+                found = 1;
+                st->rounds++;
+                if (opt->verbose && me == 0)
+                    printf(" round %2d: N=%" PRId64 " pivot=%d L=%" PRId64 " E=%" PRId64 " G=%" PRId64 " -> pivot is the answer\n", st->rounds, N_before, pivot, L, E, G);
+                break;
+            }
+            /* keep only [u, v]; k becomes relative to this part */
+            keep_mid = 1;
+            k -= L;
+        }
+        else
+        {
             k -= L + E;
         }
-        for (int c = 0; c < C; c++) {
-
-            if (keep_less)
+        /* narrow each chunk's window to the kept part: no data is moved */
+        for (int c = 0; c < C; c++)
+        {
+            if (keep_mid)
+            {
+                w.lo[c] = w.lt[c];
+                w.hi[c] = w.gt[c];
+            }
+            else if (keep_less)
                 w.hi[c] = w.lt[c];
             else
                 w.lo[c] = w.gt[c];
         }
         for (int r = 0; r < p; r++)
-            counts[r] = keep_less ? tri[3 * r] : tri[3 * r + 2];
-        N = keep_less ? L : G;
+            counts[r] = keep_mid ? tri[3 * r + 1] : keep_less ? tri[3 * r]
+                                                              : tri[3 * r + 2];
+        N = keep_mid ? E : keep_less ? L
+                                     : G;
         w.active = counts[me];
 
         /* optional load balancing */
@@ -288,7 +337,8 @@ static int32_t select_kth(DistArray *arr, int64_t k, const Options *opt,
         int did_rebalance = 0;
         int64_t moved = 0;
         if (opt->rebalance_ratio > 0 && N > switch_size &&
-            imbalance > opt->rebalance_ratio) {
+            imbalance > opt->rebalance_ratio)
+        {
 
             pack_windows(data, &w);
             data = redistribute(data, counts, p, me, N, &moved);
@@ -305,19 +355,23 @@ static int32_t select_kth(DistArray *arr, int64_t k, const Options *opt,
             printf("  round %2d: N=%" PRId64
                    " B=%d pivot=%d keep=%s -> N=%" PRId64
                    " (%.1f%%) imbalance=%.2f%s  %.1f ms\n",
-                   st->rounds, N_before, B, pivot, keep_less ? "L" : "R", N,
+                   st->rounds, N_before, B, pivot, keep_mid ? "M" : keep_less ? "L"
+                                                                              : "R",
+                   N,
                    100.0 * (double)N / (double)N_before, imbalance, rb,
                    1e3 * (MPI_Wtime() - t0));
     }
 
-    if (!found) {
+    if (!found)
+    {
 
         /* few elements are left: gather them on rank 0 and solve directly
          * (quickselect instead of sorting: same answer, linear time). */
         pack_windows(data, &w);
         int *rc = xmalloc(2 * p * sizeof(int)), *rd = rc + p;
         int64_t s = 0;
-        for (int r = 0; r < p; r++) {
+        for (int r = 0; r < p; r++)
+        {
 
             rc[r] = (int)counts[r];
             rd[r] = (int)s;
@@ -326,7 +380,8 @@ static int32_t select_kth(DistArray *arr, int64_t k, const Options *opt,
         int32_t *all = (me == 0) ? xmalloc(N * sizeof(int32_t)) : NULL;
         MPI_Gatherv(data, (int)w.active, MPI_INT32_T, all, rc, rd, MPI_INT32_T,
                     0, MPI_COMM_WORLD);
-        if (me == 0) {
+        if (me == 0)
+        {
 
             result = quickselect(all, N, k);
             free(all);
@@ -350,7 +405,8 @@ static int32_t select_kth(DistArray *arr, int64_t k, const Options *opt,
 
 // VERIFICATION (rank 0 only, reads the whole file)
 
-static int verify(const char *path, int64_t k, int32_t got) {
+static int verify(const char *path, int64_t k, int32_t got)
+{
 
     FILE *f = fopen(path, "rb");
     if (!f)
@@ -376,7 +432,8 @@ static int verify(const char *path, int64_t k, int32_t got) {
  * (0-based) iff less <= k < less + equal.  COLLECTIVE call on all ranks.
  */
 static int verify_stream(const char *path, const DistArray *arr,
-                         const Options *opt, int64_t k, int32_t got) {
+                         const Options *opt, int64_t k, int32_t got)
+{
 
     const int64_t CH = 1 << 22;
     int32_t *buf = xmalloc(CH * sizeof(int32_t));
@@ -386,7 +443,8 @@ static int verify_stream(const char *path, const DistArray *arr,
         suicide("verify: cannot reopen the file");
 
     int64_t less = 0, equal = 0;
-    for (int64_t done = 0; done < arr->local_n;) {
+    for (int64_t done = 0; done < arr->local_n;)
+    {
 
         int64_t c = arr->local_n - done < CH ? arr->local_n - done : CH;
         if (opt->gen_n)
@@ -397,7 +455,8 @@ static int verify_stream(const char *path, const DistArray *arr,
                                                 (MPI_Offset)sizeof(int32_t),
                              buf, (int)c, MPI_INT32_T, MPI_STATUS_IGNORE);
 #pragma omp parallel for reduction(+ : less, equal) schedule(static)
-        for (int64_t i = 0; i < c; i++) {
+        for (int64_t i = 0; i < c; i++)
+        {
 
             less += (buf[i] < got);
             equal += (buf[i] == got);
@@ -421,7 +480,8 @@ static int verify_stream(const char *path, const DistArray *arr,
 
 // MAIN
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
 
     int provided;
     MPI_Init_thread(&argc, &argv, MPI_THREAD_FUNNELED, &provided);
@@ -437,8 +497,10 @@ int main(int argc, char **argv) {
                    .maxv = 2147483647ULL,
                    .mode = GEN_RANDOM};
     int do_verify = 0, do_verify_stream = 0, opterr_flag = 0, c;
-    while ((c = getopt(argc, argv, "dvVr:s:p:g:S:M:m:")) != -1) {
-        switch (c) {
+    while ((c = getopt(argc, argv, "dvVr:s:p:g:S:M:m:")) != -1)
+    {
+        switch (c)
+        {
         case 'd':
             opt.verbose = 1;
             break;
@@ -459,6 +521,8 @@ int main(int argc, char **argv) {
                 opt.pivot = PIVOT_MOM;
             else if (strcmp(optarg, "rand") == 0)
                 opt.pivot = PIVOT_RANDOM;
+            else if (strcmp(optarg, "fr") == 0)
+                opt.pivot = PIVOT_FR;
             else
                 opterr_flag = 1;
             break;
@@ -492,12 +556,13 @@ int main(int argc, char **argv) {
     const int nfiles = gen ? 0 : 1; /* positional args: [file] [k] */
     if (opterr_flag || optind + nfiles > argc ||
         (opt.rebalance_ratio != 0 && opt.rebalance_ratio <= 1.0) ||
-        opt.maxv == 0 || opt.maxv > 2147483648ULL || (gen && do_verify)) {
+        opt.maxv == 0 || opt.maxv > 2147483648ULL || (gen && do_verify))
+    {
 
         if (rank == 0)
 
             fprintf(stderr,
-                    "Usage: %s [-p mom|rand] [-d] [-v] [-r ratio>1] "
+                    "Usage: %s [-p mom|rand|fr] [-d] [-v] [-r ratio>1] "
                     "[-s switch_size] <data_file> [k]\n"
                     "       %s -g N [-S seed] [-M maxv] [-m "
                     "random|sorted|reverse] [other options] [k]\n"
@@ -525,17 +590,18 @@ int main(int argc, char **argv) {
     if (k < 0 || k >= arr.global_n)
         suicide("k out of range");
 
-    if (rank == 0) {
+    if (rank == 0)
+    {
 
         double data_mb = (double)arr.local_n * 4 / 1048576.0;
         double scratch_mb =
-            opt.pivot == PIVOT_MOM
+            opt.pivot != PIVOT_RANDOM
                 ? (double)arr.local_n / block_size(arr.global_n) * 4 / 1048576.0
                 : 0.0;
         printf("n=%" PRId64 "  ranks=%d  threads/rank=%d  pivot=%s  k=%" PRId64
                "  %s=%.3f s\n",
                arr.global_n, arr.size, omp_get_max_threads(),
-               opt.pivot == PIVOT_MOM ? "mom" : "rand", k,
+               (const char *[]){"mom", "rand", "fr"}[opt.pivot], k,
                gen ? "generate" : "load", t_load);
         printf(
             "memory per rank: ~%.0f MB data + ~%.0f MB scratch (+ runtime)\n",
@@ -550,7 +616,8 @@ int main(int argc, char **argv) {
     double t_sel = MPI_Wtime() - t0;
 
     int ok = 1;
-    if (rank == 0) {
+    if (rank == 0)
+    {
 
         printf("k-th smallest = %d   (%d rounds, %d rebalances, %.3f s)\n",
                answer, st.rounds, st.rebalances, t_sel);

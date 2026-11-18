@@ -25,7 +25,8 @@
 typedef enum
 {
     PIVOT_MOM,
-    PIVOT_RANDOM
+    PIVOT_RANDOM,
+    PIVOT_FR,
 } PivotMode;
 
 /* Each rank owns one block of the global array. */
@@ -66,7 +67,8 @@ typedef struct
  * lo/hi: nothing is copied. Threads take chunks dynamically, so uneven windows
  * are balanced across threads
  */
-typedef struct {
+typedef struct
+{
 
     int C;
     int64_t
@@ -95,5 +97,6 @@ int block_size(int64_t N);
 int32_t pivot_mom(int32_t *data, Windows *w, int B, int32_t *scratch);
 int32_t pivot_random(const int32_t *data, const Windows *w, uint64_t *rng);
 int32_t weighted_median(const int64_t *vw, int *order, int p, int64_t N);
+void fr_bounds(const int32_t *data, const Windows *w, const int64_t *counts, int64_t N, int64_t k, int p, int me, uint64_t *rng, int32_t *u, int32_t *v);
 
 #endif

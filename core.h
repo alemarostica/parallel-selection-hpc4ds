@@ -31,11 +31,10 @@ static inline uint64_t mix64(uint64_t z)
 }
 
 /* kernels.c */
-void gen_fill(int32_t *dst, int64_t start, int64_t cnt, int64_t n,
-              uint64_t seed, uint64_t maxv, GenMode mode);
+void gen_fill(int32_t *dst, int64_t start, int64_t cnt, int64_t n, uint64_t seed, uint64_t maxv, GenMode mode);
 void insertion_sort(int32_t *a, int64_t n);
 int32_t quickselect(int32_t *a, int64_t n, int64_t k);
-void partition3(int32_t *data, int64_t lo, int64_t hi, int32_t pivot,
-                int64_t *lt, int64_t *gt);
+void partition3(int32_t *data, int64_t lo, int64_t hi, int32_t pivot, int64_t *lt, int64_t *gt);
+void partition_bracket(int32_t *data, int64_t lo, int64_t hi, int32_t u, int32_t v, int64_t *lt, int64_t *gt);
 
 #endif
