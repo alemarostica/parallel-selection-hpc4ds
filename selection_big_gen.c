@@ -38,6 +38,10 @@
               (no file,: every ranks generates its own slice of N elements)
  *   -p mom|rand|fr pivot strategy (default mom)
  *   -f n        with -p fr: sample size in elements (default: N^(2/3)/2)
+ *   -R          with -p fr: read-only counting pass instead of the in-place
+ *               swap partition (the data is only read; the few elements
+ *               inside [u,v] are copied to a side buffer; falls back to the
+ *               swap partition if that buffer overflows or k is missed)
  *   -d          print per-round diagnostic (pivot, sizes, imbalance)
  *   -v          verify the answer against a sequential solve (rank 0 reads the
  *               whole file: only use on files that fit in one rank's memory)
@@ -223,6 +227,21 @@ static int32_t select_kth(DistArray *arr, int64_t k, const Options *opt,
     /* FR is switched off for good if a round does not shrink the problem
      * (e.g. many duplicates); MoM then guarantees progress. */
     int fr_active = (opt->pivot == PIVOT_FR);
+
+    /* -R side buffer: each chunk may keep up to len/32 + 4096 elements inside
+     * [u,v] (plus RO_BLOCK slack, see below); a chunk that would need more is
+     * partitioned in place instead (per chunk: cdone[c] = 1). */
+#define RO_BLOCK 1024
+    int32_t *side = NULL;
+    char *cdone = NULL;
+    if (fr_active && opt->fr_readonly)
+    {
+        int64_t mx = cap > arr->local_n ? cap : arr->local_n;
+        int64_t maxC = (int64_t)CHUNKS_PER_THREAD * T;
+        side = xmalloc((mx / 32 + maxC * (4096 + RO_BLOCK + 1) + 8) *
+                       sizeof(int32_t));
+        cdone = xmalloc(maxC + 8);
+    }
     while (N > switch_size)
     {
 
@@ -255,13 +274,64 @@ static int32_t select_kth(DistArray *arr, int64_t k, const Options *opt,
         /* three-way partition: below u / inside [u, v] / above v
          * (for u == v: below / equal / above the pivot), one chunk per thread */
         double t_part = MPI_Wtime();
-#pragma omp parallel for schedule(static)
-        for (int c = 0; c < C; c++)
+        if (fr_active && side)
         {
-            if (fr_active)
-                partition_bracket(data, w.lo[c], w.hi[c], u, v, &w.lt[c], &w.gt[c]);
-            else
-                partition3(data, w.lo[c], w.hi[c], pivot, &w.lt[c], &w.gt[c]);
+            /* read-only pass: count elements below u, copy those inside
+             * [u,v] to the side buffer, never write to data. lt/gt are set as
+             * if the chunk had been partitioned, so the counting code below
+             * is shared. */
+            int64_t o = 0;
+            for (int c = 0; c < C; c++)
+            {
+                w.boff[c] = o;
+                o += (w.hi[c] - w.lo[c]) / 32 + 4096 + RO_BLOCK + 1;
+            }
+#pragma omp parallel for schedule(static)
+            for (int c = 0; c < C; c++)
+            {
+                const int64_t cap_c = (w.hi[c] - w.lo[c]) / 32 + 4096;
+                int32_t *sb = side + w.boff[c];
+                int64_t below = 0, m = 0, i = w.lo[c];
+                cdone[c] = 0;
+                while (i < w.hi[c])
+                {
+                    /* blocks: no overflow check inside (the slack absorbs up
+                     * to RO_BLOCK extra elements), one check per block */
+                    int64_t e = i + RO_BLOCK < w.hi[c] ? i + RO_BLOCK : w.hi[c];
+                    for (; i < e; i++)
+                    {
+                        int32_t x = data[i];
+                        sb[m] = x; /* branch-free: kept only if inside [u,v] */
+                        m += (x >= u) & (x <= v);
+                        below += (x < u);
+                    }
+                    if (m > cap_c)
+                    {
+                        /* too many inside: this chunk (still untouched) is
+                         * partitioned in place instead */
+                        partition_bracket(data, w.lo[c], w.hi[c], u, v,
+                                          &w.lt[c], &w.gt[c]);
+                        cdone[c] = 1;
+                        break;
+                    }
+                }
+                if (!cdone[c])
+                {
+                    w.lt[c] = w.lo[c] + below;
+                    w.gt[c] = w.lt[c] + m;
+                }
+            }
+        }
+        else
+        {
+#pragma omp parallel for schedule(static)
+            for (int c = 0; c < C; c++)
+            {
+                if (fr_active)
+                    partition_bracket(data, w.lo[c], w.hi[c], u, v, &w.lt[c], &w.gt[c]);
+                else
+                    partition3(data, w.lo[c], w.hi[c], pivot, &w.lt[c], &w.gt[c]);
+            }
         }
         t_part = MPI_Wtime() - t_part;
 
@@ -313,18 +383,49 @@ static int32_t select_kth(DistArray *arr, int64_t k, const Options *opt,
         {
             k -= L + E;
         }
-        /* narrow each chunk's window to the kept part: no data is moved */
-        for (int c = 0; c < C; c++)
+        const int ro = fr_round && side; /* this round used the read-only pass */
+        if (ro && keep_mid)
         {
-            if (keep_mid)
+            /* hit: the kept elements of a read-only chunk are in the side
+             * buffer; put them at the start of the chunk (never more than it
+             * held) and shrink the window to them. Chunks that were
+             * partitioned in place just keep [lt, gt). */
+#pragma omp parallel for schedule(static)
+            for (int c = 0; c < C; c++)
             {
-                w.lo[c] = w.lt[c];
-                w.hi[c] = w.gt[c];
+                if (cdone[c])
+                {
+                    w.lo[c] = w.lt[c];
+                    w.hi[c] = w.gt[c];
+                    continue;
+                }
+                int64_t m = w.gt[c] - w.lt[c];
+                memcpy(data + w.lo[c], side + w.boff[c], (size_t)m * sizeof(int32_t));
+                w.hi[c] = w.lo[c] + m;
             }
-            else if (keep_less)
-                w.hi[c] = w.lt[c];
-            else
-                w.lo[c] = w.gt[c];
+        }
+        else
+        {
+            if (ro) /* missed k: chunks still unpartitioned need the swap pass */
+            {
+#pragma omp parallel for schedule(static)
+                for (int c = 0; c < C; c++)
+                    if (!cdone[c])
+                        partition_bracket(data, w.lo[c], w.hi[c], u, v, &w.lt[c], &w.gt[c]);
+            }
+            /* narrow each chunk's window to the kept part: no data is moved */
+            for (int c = 0; c < C; c++)
+            {
+                if (keep_mid)
+                {
+                    w.lo[c] = w.lt[c];
+                    w.hi[c] = w.gt[c];
+                }
+                else if (keep_less)
+                    w.hi[c] = w.lt[c];
+                else
+                    w.lo[c] = w.gt[c];
+            }
         }
         for (int r = 0; r < p; r++)
             counts[r] = keep_mid ? tri[3 * r + 1] : keep_less ? tri[3 * r]
@@ -405,6 +506,8 @@ static int32_t select_kth(DistArray *arr, int64_t k, const Options *opt,
     arr->data = data;
     free(w.start);
     free(scratch);
+    free(side);
+    free(cdone);
     free(counts);
     free(tri);
     free(vw);
@@ -506,7 +609,7 @@ int main(int argc, char **argv)
                    .maxv = 2147483647ULL,
                    .mode = GEN_RANDOM};
     int do_verify = 0, do_verify_stream = 0, opterr_flag = 0, c;
-    while ((c = getopt(argc, argv, "dvVr:s:p:g:S:M:m:f:")) != -1)
+    while ((c = getopt(argc, argv, "dvVRr:s:p:g:S:M:m:f:")) != -1)
     {
         switch (c)
         {
@@ -542,6 +645,9 @@ int main(int argc, char **argv)
             break;
         case 'S':
             opt.seed = strtoull(optarg, NULL, 10);
+            break;
+        case 'R':
+            opt.fr_readonly = 1;
             break;
         case 'f':
             opt.fr_sample = strtoll(optarg, NULL, 10);

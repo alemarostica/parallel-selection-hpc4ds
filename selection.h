@@ -51,7 +51,8 @@ typedef struct
     uint64_t seed; /* generator seed */
     uint64_t maxv; /* generated values are in [0, maxv) */
     GenMode mode;  /* random | sorted | reverse */
-    int64_t fr_sample; /* FR sample size in elements (0 = paper's formula) */
+    int64_t fr_sample; /* FR sample size in elements (0 = N^(2/3)/2) */
+    int fr_readonly;   /* FR round 1: read-only counting pass (-R) */
 } Options;
 
 typedef struct

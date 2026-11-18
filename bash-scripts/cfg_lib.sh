@@ -3,10 +3,13 @@
 RANKS=${RANKS:-16}
 bench(){
     local label="$1"; shift
-    for p in mom rand fr; do
+    for mode in mom rand fr frR; do
+        local p=${mode%R}
+        local extra=""
+        [[ $mode == frR ]] && extra="-R"
         for rep in 1 2 3; do
-            echo "### $label | pivot=$p | rep=$rep"
-            mpirun -n $RANKS ./mpi_wrapper.sh ./selection -p $p -d -V "$@"
+            echo "### $label | pivot=$mode | rep=$rep"
+            mpirun -n $RANKS ./mpi_wrapper.sh ./selection -p $p $extra -d -V "$@"
         done
     done
 }

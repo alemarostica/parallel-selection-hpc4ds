@@ -16,10 +16,10 @@ module load MPICH/3.4.2-GCC-10.3.0
 N=20000000000
 for rep in 1 2 3; do
     echo "### sample=default | pivot=fr | rep=$rep"
-    mpirun -n 16 ./mpi_wrapper.sh ./selection -p fr -d -V -g $N
+    mpirun -n 16 ./mpi_wrapper.sh ./selection -p fr -R -d -V -g $N
     for f in 250000 500000 1000000 2000000 4000000 8000000; do
         echo "### sample=$f | pivot=fr | rep=$rep"
-        mpirun -n 16 ./mpi_wrapper.sh ./selection -p fr -d -V -g $N -f $f
+        mpirun -n 16 ./mpi_wrapper.sh ./selection -p fr -R -d -V -g $N -f $f
     done
     echo "### sample=- | pivot=rand | rep=$rep"
     mpirun -n 16 ./mpi_wrapper.sh ./selection -p rand -d -V -g $N
