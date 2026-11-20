@@ -17,9 +17,8 @@ On the cluster, `submit.sh <job.sh>` loads MPICH, builds
 `selection` and submits the job.
 
 `-march=native` builds for the CPU of the machine where you compile (the login
-node). If a job lands on a node with an older CPU, the program can die with an
-illegal instruction (exit code 132). This happened on `hpc3-c02-n07` in the
-32-rank scaling run; if you see it, build without `-march=native`.
+node). If a job ever dies with an illegal instruction (exit code 132), build
+without it.
 
 ## Run
 
@@ -168,7 +167,20 @@ Mean over 9 configurations (4 values of k, 5 data distributions), 3 runs each:
 |---|---|---|---|
 | 12.0 s | 5.8 s | 1.36 s | 1.27 s |
 
-N = 1e10: `mom` 5.5 s, `rand` 2.3 s, `fr` 1.0 s, `fr -R` 0.37 s (16 ranks);
-`fr -R` 0.80 s (8 ranks). Run-to-run noise on the cluster is large (up to a
-factor of two in single cells), so compare modes within the same job. The
-32-rank run is not available (see the note in Build).
+Scaling, N = 1e10, k = N/2 (median of 3 runs, 2 ranks per node x 4 threads):
+
+| Ranks | mom | rand | fr | fr -R |
+|---|---|---|---|---|
+| 8 | 10.95 s | 4.80 s | 1.91 s | 0.60 s |
+| 16 | 5.57 s | 2.25 s | 1.02 s | 0.37 s |
+| 32 | 3.24 s | 1.09 s | 0.69 s | 0.25 s |
+
+From 8 to 32 ranks (ideal 4x): `mom` 3.4x, `rand` 4.4x, `fr` 2.8x,
+`fr -R` 2.4x. The `fr` modes flatten because some costs do not shrink with the
+rank count: the two quickselects on the sample (about 20 ms, repeated on every
+rank), the sample `Allgatherv` and the final gather. At 32 ranks they are
+about a third of the 0.25 s of `fr -R`; a smaller sample (`-f`) should reduce
+this, but it was not tested at 32 ranks.
+
+Run-to-run noise on the cluster is large in some cells (up to a factor of two),
+so compare modes within the same job.
