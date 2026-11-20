@@ -141,6 +141,8 @@ The shared helper is `cfg_lib.sh` (`bench "<label>" <options>`).
 | `cfg_size.sh` | problem size |
 | `cfg_scale.sh` | number of ranks, see below |
 | `cfg_sample.sh` | FR sample size (`-f`), with `-R`, plus `rand` as reference |
+| `cfg_threads.sh` | split between ranks and OpenMP threads, `-f`, `-s` (see below) |
+| `sel_cmp.sh` | N = 4e10 against N = 2.4e11 on 128 ranks, with `-V` |
 
 Build once with `./submit.sh cfg_k.sh`, submit the others with `qsub`, one job
 at a time (jobs running together can share nodes and disturb the timings).
@@ -161,6 +163,35 @@ qsub -o logs/cfg_scale_32.txt -e logs/cfg_scale_32_err.txt -v RANKS=32 -l select
 
 ### Results so far (selection time, N = 2e10 unless noted, 16 ranks x 4 threads)
 
+All problem sizes tried, selection time in seconds, median k (k = N/2), uniform
+random data generated in memory. Medians of 3 runs unless marked with `*`
+(one run) or noted; `-` means the mode was not run at that size.
+
+| N | Data | Ranks x threads | mom | rand | fr | fr -R | Notes |
+|---|---|---|---|---|---|---|---|
+| 2e8 | 0.8 GB | 16 x 4 | 0.127 | 0.089 | 0.041 | **0.021** | `cfg_size.sh` |
+| 2e9 | 8 GB | 16 x 4 | 1.125 | 0.482 | 0.223 | **0.096** | `cfg_size.sh` |
+| 1e10 | 40 GB | 8 x 4 | 10.95 | 4.80 | 1.91 | **0.60** | `cfg_scale.sh` |
+| 1e10 | 40 GB | 16 x 4 | 5.57 | 2.25 | 1.02 | **0.37** | `cfg_scale.sh` |
+| 1e10 | 40 GB | 32 x 4 | 3.24 | 1.09 | 0.69 | **0.25** | `cfg_scale.sh` |
+| 1e10 | 40 GB | 64 x 2 | 2.76 | 1.08 | 0.64 | **0.28** | `cfg_threads.sh`; 0.24 with `-f 250000` |
+| 2e10 | 80 GB | 16 x 4 | 10.8 | 3.7 | 2.45* | **0.88** | 0.55 with `-f 250000` |
+| 4e10 | 160 GB | 64 x 2 | - | - | - | **1.72*** | generated; from a file: 2.11* (loading it took 377 s) |
+| 4e10 | 160 GB | 128 x 2 | - | - | - | **0.42** | 6 runs, 8 ranks per host |
+| 2.4e11 | 960 GB | 128 x 2 | - | - | - | **4.79** | 6 runs, verified with `-V` |
+
+On a single laptop-class machine (4 ranks x 2 threads, 800M integers, 3.2 GB),
+with the serial `quickselect` as reference:
+
+| N | serial | mom | rand | fr | fr -R |
+|---|---|---|---|---|---|
+| 8e8 | 18.0 | 9.74 | 3.08 | 1.54 | **0.60** |
+
+The serial reference took 2.3 s at 1e8 and 8.1 s at 4e8 on the same machine
+(about 20-23 ns per element). Ranks and thread layouts differ between rows, so
+compare the modes within a row, not the rows with each other; the scaling
+tables below compare layouts at a fixed size.
+
 Mean over 9 configurations (4 values of k, 5 data distributions), 3 runs each:
 
 | mom | rand | fr | fr -R |
@@ -179,8 +210,78 @@ From 8 to 32 ranks (ideal 4x): `mom` 3.4x, `rand` 4.4x, `fr` 2.8x,
 `fr -R` 2.4x. The `fr` modes flatten because some costs do not shrink with the
 rank count: the two quickselects on the sample (about 20 ms, repeated on every
 rank), the sample `Allgatherv` and the final gather. At 32 ranks they are
-about a third of the 0.25 s of `fr -R`; a smaller sample (`-f`) should reduce
-this, but it was not tested at 32 ranks.
+about a third of the 0.25 s of `fr -R`; a smaller sample (`-f`) reduces this
+(see the threads experiments below).
+
+Ranks x threads, N = 1e10, k = N/2, same 128 cores (16 nodes x 8 cores), median
+of 3 runs (`cfg_threads.sh`, no thread pinning, `place=scatter`):
+
+| Ranks x threads | mom | rand | fr | fr -R | `-R` round 1 partition | `-R` sampling |
+|---|---|---|---|---|---|---|
+| 32 x 4 | 2.99 s | 1.11 s | 0.645 s | 0.318 s | 127 ms | 74 ms |
+| 16 x 8 | 3.05 s | 1.00 s | 0.696 s | 0.339 s | 132 ms | 122 ms |
+| 64 x 2 | 2.76 s | 1.08 s | 0.638 s | **0.283 s** | 125 ms | 66 ms |
+
+More threads per rank did not help: the partition pass takes the same time in
+all three layouts (125-132 ms with `-R`, about 510 ms for the in-place pass), so
+its speed is set by the total number of cores (or by memory bandwidth), not by
+how they are split. With fewer, fatter ranks the sampling gets slower, because
+each rank draws a larger share of the sample on one thread (the draw is 20 ms
+at 16 ranks and 3-4 ms at 64 ranks); the two quickselects stay at 20-26 ms per
+rank. The best layout, 64 x 2, is about 11% faster than 32 x 4, which is within
+what 3 runs can resolve.
+
+Sample size and final gather, `fr -R`, 64 x 2, N = 1e10 (selection time):
+
+| Variant | Runs | Median |
+|---|---|---|
+| default sample (2.3M) | 0.268, 0.307, 0.283 s | 0.283 s |
+| `-f 250000`, first job | 1.494, 0.287, 0.223 s | 0.287 s |
+| `-f 250000`, second job | 0.257, 0.214, 0.243 s | **0.243 s** |
+| `-s 500000` (gather below 500k) | 0.456, 1.251, 0.259 s | 0.456 s |
+
+`-f 250000` cuts the sampling cost from about 66 ms to about 16 ms (quickselect
+25 -> 3 ms, `Allgatherv` 36 -> 4-12 ms) at the price of a slightly slower
+round 2 and a larger final gather (3.6M instead of 1.9M elements). In the
+second job it is about 14% faster than the default; in the first job one run
+was disturbed by a slow collective (`Allgatherv` 486 ms), so treat the gain as
+small but likely. `-s 500000` adds a third round and does not help.
+
+Some runs show collectives that take 0.2-0.7 s instead of 5-40 ms. That jitter
+is larger than anything the sample or gather tuning removes, and it did not
+appear in a single-node run (4 ranks, spread under 3%), so it most likely comes
+from the shared network. `place=pack` was not tested: in PBS it puts all
+chunks on a single host, so it cannot work for a job that needs more cores than
+one node has (the nodes of this queue have 28 to 96 cores).
+
+Large run, N = 2.4e11 integers (960 GB generated in memory), `fr -R -f 250000`,
+k = N/2, 128 ranks x 2 threads on 16 hosts with 8 ranks per host
+(`select=16:ncpus=16:mpiprocs=8:mem=72gb`, `sel_cmp.sh`), compared with N = 4e10
+on the same layout and in the same job (6 runs per size over two jobs, all with
+the distributed check `-V` passing in the second job):
+
+| N | Data per rank | Selection time (runs) | Median | Rounds | Round 1 partition |
+|---|---|---|---|---|---|
+| 4e10 (160 GB) | 312M elements | 0.339, 0.379, 0.395, 0.449, 0.476, 0.477 s | **0.42 s** | 3 | 350-359 ms |
+| 2.4e11 (960 GB) | 1.875 billion elements | 4.10, 4.60, 4.68, 4.90, 4.98, 5.01 s | **4.79 s** | 3 | 2389-2401 ms |
+
+The median found is 1073743833; the check counts 119,999,999,955 elements below
+it and 96 equal to it, so rank k = 120,000,000,000 is inside. Generating the data
+in memory takes 4.5-4.9 s at this size (0.7 s at 4e10). Memory per rank is about
+7.2 GB of data plus 0.2 GB of scratch, about 66 GB per host.
+
+6x more data costs about 10-11x more time: the partition pass is 6.8x slower
+(about 25 GB/s per host in both sizes, so it looks memory-bound per host), and
+the first sample `Allgatherv` takes 640-760 ms at 2.4e11 against 3-4 ms at
+4e10, which is not explained. The medians of all runs are within one standard
+deviation of the expected median of a uniform sample (about 1073741824 +- 2200
+at this size). This run times the selection only; reading a file of this size
+would take much longer than the selection.
+
+Queue limits seen while preparing it: `shortHPC4DS` serves only 24 hosts
+(six `c02`, `c03-n03`, `c11-n11..n18`, `c12-n01..n08` and `c12-n14`), so a job
+with `place=scatter` and more than 24 chunks never starts (`Insufficient amount
+of resource: queuelist`); use fewer hosts with more ranks per host.
 
 Run-to-run noise on the cluster is large in some cells (up to a factor of two),
 so compare modes within the same job.
