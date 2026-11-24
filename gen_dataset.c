@@ -117,9 +117,9 @@ int main(int argc, char **argv) {
             i++;
             if (strcmp(argv[i], "random") == 0)
                 mode = GEN_RANDOM;
-            else if (strcmp(argv[i], "sorted"))
+            else if (strcmp(argv[i], "sorted") == 0)
                 mode = GEN_SORTED;
-            else if (strcmp(argv[i], "reverse"))
+            else if (strcmp(argv[i], "reverse") == 0)
                 mode = GEN_REVERSE;
             else
                 usage(argv[0]);
