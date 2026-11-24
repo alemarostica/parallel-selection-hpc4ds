@@ -31,7 +31,9 @@ OMP_NUM_THREADS=4 mpirun -n 16 ./selection -g N [options] [k]
 ```
 
 Output: the k-th smallest value, the number of rounds and the time of the
-selection (generation or loading is timed separately).
+selection (generation or loading is timed separately). A small untimed
+warm-up (one `Allgather` and one `Allreduce`) runs before the timed selection;
+its measured effect is small (about 17% at 4e10, none visible at 2.4e11).
 
 ### Input file
 
