@@ -246,6 +246,10 @@ round 2 and a larger final gather (3.6M instead of 1.9M elements). In the
 second job it is about 14% faster than the default; in the first job one run
 was disturbed by a slow collective (`Allgatherv` 486 ms), so treat the gain as
 small but likely. `-s 500000` adds a third round and does not help.
+A larger switch size does not help either (1e10, 64 ranks x 2 threads, median
+of 3): `fr -R` takes 0.26 s with the default 4M, 0.75 s with `-s 16000000` and
+2.7 s with `-s 64000000`, because rank 0 then finishes a bigger problem
+serially; keep the default.
 
 Some runs show collectives that take 0.2-0.7 s instead of 5-40 ms. That jitter
 is larger than anything the sample or gather tuning removes, and it did not

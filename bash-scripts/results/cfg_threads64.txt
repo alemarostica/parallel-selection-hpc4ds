@@ -1,0 +1,900 @@
+### ranks=64 threads=2 extra= -s 64000000 N=1e10 | pivot=mom | rep=1
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+n=10000000000  ranks=64  threads/rank=2  pivot=mom  k=5000000000  generate=0.889 s
+memory per rank: ~596 MB data + ~18 MB scratch (+ runtime)
+  round  1: N=10000000000 B=33 pivot=1073730090 keep=R -> N=5000069269 (50.0%) imbalance=1.00  4416.8 ms
+  round  2: N=5000069269 B=33 pivot=1610438154 keep=L -> N=2499244302 (50.0%) imbalance=1.00  1916.6 ms
+  round  3: N=2499244302 B=31 pivot=1342350360 keep=L -> N=1250869497 (50.0%) imbalance=1.00  1046.7 ms
+  round  4: N=1250869497 B=31 pivot=1208149563 keep=L -> N=625953042 (50.0%) imbalance=1.00  286.2 ms
+  round  5: N=625953042 B=29 pivot=1141075116 keep=L -> N=313606872 (50.1%) imbalance=1.00  317.7 ms
+  round  6: N=313606872 B=29 pivot=1107428347 keep=L -> N=156924312 (50.0%) imbalance=1.00  155.7 ms
+  round  7: N=156924312 B=27 pivot=1090610022 keep=L -> N=78602263 (50.1%) imbalance=1.00  69.1 ms
+  round  8: N=78602263 B=27 pivot=1082176780 keep=L -> N=39332894 (50.0%) imbalance=1.00  41.8 ms
+  gathered 39332894 elements on rank 0, k=69269
+k-th smallest = 1073745010   (8 rounds, 0 rebalances, 8.679 s)
+verify (distributed): 4999999997 elements < 1073745010, 4 equal, k=5000000000  -> OK
+### ranks=64 threads=2 extra= -s 64000000 N=1e10 | pivot=mom | rep=2
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+n=10000000000  ranks=64  threads/rank=2  pivot=mom  k=5000000000  generate=0.596 s
+memory per rank: ~596 MB data + ~18 MB scratch (+ runtime)
+  round  1: N=10000000000 B=33 pivot=1073730090 keep=R -> N=5000069269 (50.0%) imbalance=1.00  6258.7 ms
+  round  2: N=5000069269 B=33 pivot=1610438154 keep=L -> N=2499244302 (50.0%) imbalance=1.00  1452.5 ms
+  round  3: N=2499244302 B=31 pivot=1342350360 keep=L -> N=1250869497 (50.0%) imbalance=1.00  1350.0 ms
+  round  4: N=1250869497 B=31 pivot=1208149563 keep=L -> N=625953042 (50.0%) imbalance=1.00  266.2 ms
+  round  5: N=625953042 B=29 pivot=1141075116 keep=L -> N=313606872 (50.1%) imbalance=1.00  669.6 ms
+  round  6: N=313606872 B=29 pivot=1107428347 keep=L -> N=156924312 (50.0%) imbalance=1.00  140.6 ms
+  round  7: N=156924312 B=27 pivot=1090610022 keep=L -> N=78602263 (50.1%) imbalance=1.00  52.3 ms
+  round  8: N=78602263 B=27 pivot=1082176780 keep=L -> N=39332894 (50.0%) imbalance=1.00  37.3 ms
+  gathered 39332894 elements on rank 0, k=69269
+k-th smallest = 1073745010   (8 rounds, 0 rebalances, 10.650 s)
+verify (distributed): 4999999997 elements < 1073745010, 4 equal, k=5000000000  -> OK
+### ranks=64 threads=2 extra= -s 64000000 N=1e10 | pivot=mom | rep=3
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+n=10000000000  ranks=64  threads/rank=2  pivot=mom  k=5000000000  generate=1.380 s
+memory per rank: ~596 MB data + ~18 MB scratch (+ runtime)
+  round  1: N=10000000000 B=33 pivot=1073730090 keep=R -> N=5000069269 (50.0%) imbalance=1.00  4186.5 ms
+  round  2: N=5000069269 B=33 pivot=1610438154 keep=L -> N=2499244302 (50.0%) imbalance=1.00  2592.1 ms
+  round  3: N=2499244302 B=31 pivot=1342350360 keep=L -> N=1250869497 (50.0%) imbalance=1.00  587.2 ms
+  round  4: N=1250869497 B=31 pivot=1208149563 keep=L -> N=625953042 (50.0%) imbalance=1.00  150.0 ms
+  round  5: N=625953042 B=29 pivot=1141075116 keep=L -> N=313606872 (50.1%) imbalance=1.00  105.0 ms
+  round  6: N=313606872 B=29 pivot=1107428347 keep=L -> N=156924312 (50.0%) imbalance=1.00  60.8 ms
+  round  7: N=156924312 B=27 pivot=1090610022 keep=L -> N=78602263 (50.1%) imbalance=1.00  39.0 ms
+  round  8: N=78602263 B=27 pivot=1082176780 keep=L -> N=39332894 (50.0%) imbalance=1.00  27.4 ms
+  gathered 39332894 elements on rank 0, k=69269
+k-th smallest = 1073745010   (8 rounds, 0 rebalances, 8.128 s)
+verify (distributed): 4999999997 elements < 1073745010, 4 equal, k=5000000000  -> OK
+### ranks=64 threads=2 extra= -s 64000000 N=1e10 | pivot=rand | rep=1
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+n=10000000000  ranks=64  threads/rank=2  pivot=rand  k=5000000000  generate=1.376 s
+memory per rank: ~596 MB data + ~0 MB scratch (+ runtime)
+  round  1: N=10000000000 B=33 pivot=992322724 keep=R -> N=5379169105 (53.8%) imbalance=1.00  913.1 ms
+  round  2: N=5379169105 B=33 pivot=1573546065 keep=L -> N=2706564889 (50.3%) imbalance=1.00  498.6 ms
+  round  3: N=2706564889 B=31 pivot=1262175090 keep=L -> N=1256629587 (46.4%) imbalance=1.00  539.8 ms
+  round  4: N=1256629587 B=31 pivot=1132555564 keep=L -> N=653034461 (52.0%) imbalance=1.00  142.4 ms
+  round  5: N=653034461 B=29 pivot=1064325460 keep=R -> N=317726865 (48.7%) imbalance=1.00  76.0 ms
+  round  6: N=317726865 B=29 pivot=1096928460 keep=L -> N=151820582 (47.8%) imbalance=1.00  21.5 ms
+  round  7: N=151820582 B=27 pivot=1080536836 keep=L -> N=75486177 (49.7%) imbalance=1.00  8.4 ms
+  round  8: N=75486177 B=27 pivot=1072549660 keep=R -> N=37189734 (49.3%) imbalance=1.00  4.4 ms
+  gathered 37189734 elements on rank 0, k=5565066
+k-th smallest = 1073745010   (8 rounds, 0 rebalances, 2.732 s)
+verify (distributed): 4999999997 elements < 1073745010, 4 equal, k=5000000000  -> OK
+### ranks=64 threads=2 extra= -s 64000000 N=1e10 | pivot=rand | rep=2
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+n=10000000000  ranks=64  threads/rank=2  pivot=rand  k=5000000000  generate=0.715 s
+memory per rank: ~596 MB data + ~0 MB scratch (+ runtime)
+  round  1: N=10000000000 B=33 pivot=992322724 keep=R -> N=5379169105 (53.8%) imbalance=1.00  685.4 ms
+  round  2: N=5379169105 B=33 pivot=1573546065 keep=L -> N=2706564889 (50.3%) imbalance=1.00  464.1 ms
+  round  3: N=2706564889 B=31 pivot=1262175090 keep=L -> N=1256629587 (46.4%) imbalance=1.00  331.3 ms
+  round  4: N=1256629587 B=31 pivot=1132555564 keep=L -> N=653034461 (52.0%) imbalance=1.00  160.8 ms
+  round  5: N=653034461 B=29 pivot=1064325460 keep=R -> N=317726865 (48.7%) imbalance=1.00  76.6 ms
+  round  6: N=317726865 B=29 pivot=1096928460 keep=L -> N=151820582 (47.8%) imbalance=1.00  38.8 ms
+  round  7: N=151820582 B=27 pivot=1080536836 keep=L -> N=75486177 (49.7%) imbalance=1.00  20.6 ms
+  round  8: N=75486177 B=27 pivot=1072549660 keep=R -> N=37189734 (49.3%) imbalance=1.00  17.0 ms
+  gathered 37189734 elements on rank 0, k=5565066
+k-th smallest = 1073745010   (8 rounds, 0 rebalances, 2.335 s)
+verify (distributed): 4999999997 elements < 1073745010, 4 equal, k=5000000000  -> OK
+### ranks=64 threads=2 extra= -s 64000000 N=1e10 | pivot=rand | rep=3
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+n=10000000000  ranks=64  threads/rank=2  pivot=rand  k=5000000000  generate=0.648 s
+memory per rank: ~596 MB data + ~0 MB scratch (+ runtime)
+  round  1: N=10000000000 B=33 pivot=992322724 keep=R -> N=5379169105 (53.8%) imbalance=1.00  1018.0 ms
+  round  2: N=5379169105 B=33 pivot=1573546065 keep=L -> N=2706564889 (50.3%) imbalance=1.00  787.0 ms
+  round  3: N=2706564889 B=31 pivot=1262175090 keep=L -> N=1256629587 (46.4%) imbalance=1.00  320.3 ms
+  round  4: N=1256629587 B=31 pivot=1132555564 keep=L -> N=653034461 (52.0%) imbalance=1.00  230.5 ms
+  round  5: N=653034461 B=29 pivot=1064325460 keep=R -> N=317726865 (48.7%) imbalance=1.00  55.1 ms
+  round  6: N=317726865 B=29 pivot=1096928460 keep=L -> N=151820582 (47.8%) imbalance=1.00  34.8 ms
+  round  7: N=151820582 B=27 pivot=1080536836 keep=L -> N=75486177 (49.7%) imbalance=1.00  12.9 ms
+  round  8: N=75486177 B=27 pivot=1072549660 keep=R -> N=37189734 (49.3%) imbalance=1.00  8.2 ms
+  gathered 37189734 elements on rank 0, k=5565066
+k-th smallest = 1073745010   (8 rounds, 0 rebalances, 2.996 s)
+verify (distributed): 4999999997 elements < 1073745010, 4 equal, k=5000000000  -> OK
+### ranks=64 threads=2 extra= -s 64000000 N=1e10 | pivot=fr | rep=1
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+n=10000000000  ranks=64  threads/rank=2  pivot=fr  k=5000000000  generate=0.739 s
+memory per rank: ~596 MB data + ~18 MB scratch (+ runtime)
+  round  1: N=10000000000 B=33 pivot=1066880484 keep=M -> N=62758034 (0.6%) imbalance=1.00  1611.6 ms
+           fr: s=2320768 draw 3 ms, allgather 130 ms, select 27 ms, partition 445 ms
+  gathered 62758034 elements on rank 0, k=31960216
+k-th smallest = 1073745010   (1 rounds, 0 rebalances, 2.493 s)
+verify (distributed): 4999999997 elements < 1073745010, 4 equal, k=5000000000  -> OK
+### ranks=64 threads=2 extra= -s 64000000 N=1e10 | pivot=fr | rep=2
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+n=10000000000  ranks=64  threads/rank=2  pivot=fr  k=5000000000  generate=0.251 s
+memory per rank: ~596 MB data + ~18 MB scratch (+ runtime)
+  round  1: N=10000000000 B=33 pivot=1066880484 keep=M -> N=62758034 (0.6%) imbalance=1.00  924.1 ms
+           fr: s=2320768 draw 3 ms, allgather 38 ms, select 27 ms, partition 445 ms
+  gathered 62758034 elements on rank 0, k=31960216
+k-th smallest = 1073745010   (1 rounds, 0 rebalances, 1.823 s)
+verify (distributed): 4999999997 elements < 1073745010, 4 equal, k=5000000000  -> OK
+### ranks=64 threads=2 extra= -s 64000000 N=1e10 | pivot=fr | rep=3
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+n=10000000000  ranks=64  threads/rank=2  pivot=fr  k=5000000000  generate=0.791 s
+memory per rank: ~596 MB data + ~18 MB scratch (+ runtime)
+  round  1: N=10000000000 B=33 pivot=1066880484 keep=M -> N=62758034 (0.6%) imbalance=1.00  1017.7 ms
+           fr: s=2320768 draw 3 ms, allgather 135 ms, select 27 ms, partition 448 ms
+  gathered 62758034 elements on rank 0, k=31960216
+k-th smallest = 1073745010   (1 rounds, 0 rebalances, 1.920 s)
+verify (distributed): 4999999997 elements < 1073745010, 4 equal, k=5000000000  -> OK
+### ranks=64 threads=2 extra= -s 64000000 N=1e10 | pivot=frR | rep=1
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+n=10000000000  ranks=64  threads/rank=2  pivot=fr  k=5000000000  generate=0.424 s
+memory per rank: ~596 MB data + ~18 MB scratch (+ runtime)
+  round  1: N=10000000000 B=33 pivot=1066880484 keep=M -> N=62758034 (0.6%) imbalance=1.00  2266.4 ms
+           fr: s=2320768 draw 3 ms, allgather 950 ms, select 27 ms, partition 151 ms
+  gathered 62758034 elements on rank 0, k=31960216
+k-th smallest = 1073745010   (1 rounds, 0 rebalances, 3.164 s)
+verify (distributed): 4999999997 elements < 1073745010, 4 equal, k=5000000000  -> OK
+### ranks=64 threads=2 extra= -s 64000000 N=1e10 | pivot=frR | rep=2
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+n=10000000000  ranks=64  threads/rank=2  pivot=fr  k=5000000000  generate=0.577 s
+memory per rank: ~596 MB data + ~18 MB scratch (+ runtime)
+  round  1: N=10000000000 B=33 pivot=1066880484 keep=M -> N=62758034 (0.6%) imbalance=1.00  1699.4 ms
+           fr: s=2320768 draw 3 ms, allgather 35 ms, select 27 ms, partition 149 ms
+  gathered 62758034 elements on rank 0, k=31960216
+k-th smallest = 1073745010   (1 rounds, 0 rebalances, 2.667 s)
+verify (distributed): 4999999997 elements < 1073745010, 4 equal, k=5000000000  -> OK
+### ranks=64 threads=2 extra= -s 64000000 N=1e10 | pivot=frR | rep=3
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n16.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n01.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n14.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n12.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n04.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n17.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c02-n06.unitn.it: UCX_NET_DEVICES=enp130s0f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n15.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n11.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n07.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n03.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n14.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n02.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n08.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c12-n04.unitn.it: UCX_NET_DEVICES=enp109s0f0np0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+hpc3-c11-n13.unitn.it: UCX_NET_DEVICES=ens1f0
+n=10000000000  ranks=64  threads/rank=2  pivot=fr  k=5000000000  generate=0.938 s
+memory per rank: ~596 MB data + ~18 MB scratch (+ runtime)
+  round  1: N=10000000000 B=33 pivot=1066880484 keep=M -> N=62758034 (0.6%) imbalance=1.00  939.1 ms
+           fr: s=2320768 draw 3 ms, allgather 123 ms, select 27 ms, partition 149 ms
+  gathered 62758034 elements on rank 0, k=31960216
+k-th smallest = 1073745010   (1 rounds, 0 rebalances, 1.894 s)
+verify (distributed): 4999999997 elements < 1073745010, 4 equal, k=5000000000  -> OK
