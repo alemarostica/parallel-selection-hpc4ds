@@ -729,6 +729,22 @@ int main(int argc, char **argv)
     }
 
     Stats st = {0, 0};
+    /*  
+        Warm-up : the first collectives pay one-off connection setup
+        Do a small gather + reduce so
+        the timed selection measures steady-state communication. 
+     */
+
+    {
+        int wp;
+        MPI_Comm_size(MPI_COMM_WORLD, &wp);
+        enum {WARM=4096};
+        int32_t *wbuf = calloc((size_t)WARM * wp, sizeof(int32_t));
+        long long wl = 1,wg;
+        MPI_Allgather(MPI_IN_PLACE,WARM,MPI_INT32_T,wbuf,WARM,MPI_INT32_T,MPI_COMM_WORLD);
+        MPI_Allreduce(&wl,&wg,1,MPI_LONG_LONG,MPI_SUM,MPI_COMM_WORLD);
+        free(wbuf);
+    }
     MPI_Barrier(MPI_COMM_WORLD);
     t0 = MPI_Wtime();
     int32_t answer = select_kth(&arr, k, &opt, &st);
