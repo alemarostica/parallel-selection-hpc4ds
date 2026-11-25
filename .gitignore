@@ -67,5 +67,8 @@ report/.araraconfig.yaml
 *.out
 *.toc
 
+# Ignore papers, don't think we should upload them publicly
+papers/
+
 # IDE stuff
 .vscode
