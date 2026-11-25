@@ -20,7 +20,6 @@
  *             sorted / reverse: globally sorted ramp (makes the ranks lose
  *             elements unevenly during selection: useful to test balancing)
  */
-#include <asm-generic/errno-base.h>
 #include <stddef.h>
 #define _POSIX_C_SOURCE 200809L
 #include <errno.h>
