@@ -75,3 +75,6 @@ papers/
 
 # IDE stuff
 .vscode
+
+# Python virtualenv
+.venv/
