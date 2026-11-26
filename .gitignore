@@ -66,6 +66,9 @@ report/.araraconfig.yaml
 *.aux
 *.out
 *.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
 
 # Ignore papers, don't think we should upload them publicly
 papers/
